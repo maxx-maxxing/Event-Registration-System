@@ -1,6 +1,4 @@
-﻿
-
-Console.WriteLine("Enter your full name: ");
+﻿Console.WriteLine("Enter your full name: ");
 string name = Console.ReadLine() ?? "";
 while (string.IsNullOrWhiteSpace(name))
 {
@@ -8,15 +6,35 @@ while (string.IsNullOrWhiteSpace(name))
     Console.WriteLine("Enter your full name: ");
     name = Console.ReadLine() ?? "";
 }
+Console.WriteLine("Name accepted.\n");
 
-Console.WriteLine("Age: ");
-int age = Convert.ToInt32(Console.ReadLine());
-// ^^ FIXME: Use try/catch OR TryParse, and range based check
+Console.WriteLine("Enter age: ");
+string age = Console.ReadLine() ?? "";
+while (!int.TryParse(age, out int ageAsInt))
+{
+    Console.WriteLine("Invalid input. Try again.");
+    Console.WriteLine("Enter age: ");
+    age = Console.ReadLine() ?? "";
+}
+Console.WriteLine($"Age accepted.\n");
+
 
 Console.WriteLine("How many days will you be attending the conference? " +
                   "(Press 1, 2, or 3)");
-int daysAttended = Convert.ToInt32(Console.ReadLine());
-// ^^ FIXME: Use try/catch OR TryParse, and range based check
+
+string daysAttended = Console.ReadLine() ?? "";
+
+while ((!int.TryParse(daysAttended, out int daysAsInt)) || (daysAsInt < 1 || daysAsInt > 3))
+{
+    Console.WriteLine("Invalid input. Must be 1, 2, or 3. Try again.\n");
+    Console.WriteLine("How many days will you be attending the conference? " +
+                          "(Press 1, 2, or 3)");
+    daysAttended = Console.ReadLine() ?? "";
+}
+Console.WriteLine($"{daysAttended} day stay accepted.");
+
+
+
 
 
 
