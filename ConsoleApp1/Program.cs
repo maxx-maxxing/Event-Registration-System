@@ -12,7 +12,9 @@ Console.WriteLine("Name accepted.\n");
 // === Age ===
 Console.WriteLine("Enter age: ");
 string age = Console.ReadLine() ?? "";
-while (!int.TryParse(age, out int ageAsInt))
+
+int ageAsInt; // init an int to pass vals to
+while (!int.TryParse(age, out ageAsInt))
 {
     Console.WriteLine("Invalid input. Try again.");
     Console.WriteLine("Enter age: ");
@@ -27,41 +29,40 @@ Console.WriteLine("How many days will you be attending the conference? " +
 
 string daysAttended = Console.ReadLine() ?? "";
 
-while ((!int.TryParse(daysAttended, out int daysAsInt)) || (daysAsInt < 1 || daysAsInt > 3))
+int daysAsInt; // init an int to pass vals to
+while ((!int.TryParse(daysAttended, out daysAsInt)) || (daysAsInt < 1 || daysAsInt > 3))
 {
     Console.WriteLine("Invalid input. Must be 1, 2, or 3. Try again.\n");
     Console.WriteLine("How many days will you be attending the conference? " +
                           "(Press 1, 2, or 3)");
     daysAttended = Console.ReadLine() ?? "";
 }
-Console.WriteLine($"{daysAttended} day stay accepted.");
+Console.WriteLine($"{daysAsInt} day stay accepted.");
 
 // === Final Output ===
 Console.WriteLine($"Registration Summary");
 Console.WriteLine($"Name: {name}");
-Console.WriteLine($"Age: {age}");
-Console.WriteLine($"Days Attending: {daysAttended}");
-Console.WriteLine($"Total Cost: {TotalCost(age, daysAttended)}");
+Console.WriteLine($"Age: {ageAsInt}");
+Console.WriteLine($"Days Attending: {daysAsInt}");
+Console.WriteLine($"Total Cost: {TotalCost(ageAsInt, daysAsInt)}");
 
 
 // === Functions ===
-string TotalCost(string visitorAge, string totalDays)
+static string TotalCost(int visitorAge, int totalDays)
 {
-    int.TryParse(visitorAge, out int ageAsInt);
-    int.TryParse(totalDays, out int daysAsInt);
-    double registrationFeePerDay = 75.0;
-    double basePrice = registrationFeePerDay * daysAsInt;
-    if (ageAsInt < 25)
+    decimal registrationFeePerDay = 75m; // When dealing w currency, use decimal
+    decimal basePrice = registrationFeePerDay * totalDays;
+    if (visitorAge < 25)
     {
-        basePrice -= (basePrice * .10);
+        basePrice -= (basePrice * .10m);
     }
-    else if (ageAsInt > 60)
+    else if (visitorAge >= 60)
     {
-        basePrice -= (basePrice * .15);
+        basePrice -= (basePrice * .15m);
     }
 
 
-    return basePrice.ToString("C");
+    return basePrice.ToString("C"); // Formats return to proper currency
 }
 
 
