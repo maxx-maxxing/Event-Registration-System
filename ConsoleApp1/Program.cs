@@ -1,6 +1,13 @@
-﻿Console.WriteLine("Enter your full name: ");
+﻿
+
+Console.WriteLine("Enter your full name: ");
 string name = Console.ReadLine() ?? "";
-// ^^ FIXME: Use string.IsNullOrWhiteSpace(string value) for input handling
+while (string.IsNullOrWhiteSpace(name))
+{
+    Console.WriteLine("Name cannot be empty. Try Again.");
+    Console.WriteLine("Enter your full name: ");
+    name = Console.ReadLine() ?? "";
+}
 
 Console.WriteLine("Age: ");
 int age = Convert.ToInt32(Console.ReadLine());
